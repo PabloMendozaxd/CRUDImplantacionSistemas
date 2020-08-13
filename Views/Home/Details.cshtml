@@ -1,0 +1,33 @@
+﻿@model Carreras
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+@*<h1 class="display-4">Detalles</h1>
+    <hr />*@
+
+<div class="card">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-2">Id</dt>
+            <dd class="col-10">
+                @Model.Id
+            </dd>
+            <dt class="col-2">Titulo</dt>
+            <dd class="col-10">
+                @Model.Titulo
+            </dd>
+            <dt class="col-2">Creditos</dt>
+            <dd class="col-10">
+                @Model.Creditos
+            </dd>
+            <dt class="col-2">Campus</dt>
+            <dd class="col-10">
+                @Model.Campus
+            </dd>
+        </dl>
+    </div>
+</div>
+
+@*<a asp-action="Index" class="btn btn-danger mt-3">Regresar</a>*@

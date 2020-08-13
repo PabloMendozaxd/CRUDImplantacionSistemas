@@ -1,0 +1,89 @@
+﻿@model List<Carreras>
+
+    @{
+        ViewData["Title"] = "Home Page";
+    }
+
+    <p>
+        <a asp-action="Create" class="btn btn-success">Crear Nuevo</a>
+    </p>
+
+    <table class="table table-sm table-striped text-center">
+        <tr>
+            <th>Titulo</th>
+            <th>Creditos</th>
+            <th>Campus</th>
+            <th></th>
+        </tr>
+        @foreach (var e in Model)
+        {
+            <tr>
+                <th>@e.Titulo</th>
+                <td>@e.Creditos</td>
+                <td>@e.Campus</td>
+                <td>
+                    <a onclick="detalles('@e.Id')" class="btn btn-primary">Detalles</a> |
+                    @*<a asp-action="Details" asp-route-id="@e.Id" class="btn btn-primary">Detalles</a>*@
+                    <a asp-action="Edit" asp-route-id="@e.Id" class="btn btn-warning">Editar</a> |
+                    <a onclick="borrar('@e.Id')" class="btn btn-danger">Borrar</a>
+                    @*<a asp-action="Delete" asp-route-id="@e.Id" class="btn btn-danger">Borrar</a>*@
+                </td>
+            </tr>
+        }
+    </table>
+
+    <!-- Modal Borrar -->
+    <div class="modal fade" id="eliminarModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Eliminar</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Seguro que deseas eliminar el registro</p>
+                </div>
+                <div class="modal-footer">
+                    <a id="eliminar-btn" class="btn btn-danger">Eliminar</a>
+                    <button class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Detalles -->
+    <div class="modal fade" id="detallesModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Detalles</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="detallesModalContent" class="modal-body"></div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @section Scripts{
+        <script>
+        function borrar(id) {
+            $('#eliminarModal').modal('show');
+            $('#eliminar-btn').attr('href', '/Home/Delete/' + id);
+        }
+        function detalles(id) {
+            $('#detallesModal').modal('show');
+            $.ajax("/Home/Details/" + id)
+                .done(function(data) {
+                    $("#detallesModalContent").html(data);
+            });
+        }
+        </script>
+    }
